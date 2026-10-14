@@ -1,0 +1,283 @@
+@import "@fontsource-variable/unbounded";
+@import "@fontsource-variable/instrument-sans";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-black font-sans text-white antialiased;
+    width: 100%;
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  canvas {
+    touch-action: pan-y;
+  }
+
+  :focus-visible {
+    outline: 2px solid #e8dfa0;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: #e8dfa0;
+    color: #000;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /* Max-width page container used by every section */
+  .screen-max-width {
+    @apply relative mx-auto w-full max-w-[1120px];
+  }
+
+  .common-padding {
+    @apply px-5 py-20 sm:px-10 sm:py-28;
+  }
+
+  /* Primary / secondary buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-cap px-6 py-3 text-base font-semibold text-black transition-colors duration-200 hover:bg-white;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3 text-base font-semibold text-white transition-colors duration-200 hover:border-white hover:bg-white/10;
+  }
+
+  /* Page title used on About / Firmware */
+  .page-title {
+    @apply font-display font-medium leading-[1.05] tracking-tight;
+    font-size: clamp(2.25rem, 6.5vw, 4.5rem);
+  }
+
+  .section-heading {
+    @apply font-display font-medium leading-[1.1] tracking-tight text-white;
+    font-size: clamp(1.75rem, 4.2vw, 3.25rem);
+  }
+
+  /* Readable paragraph width */
+  .prose-juno {
+    @apply max-w-[62ch] text-lg leading-relaxed text-gray-100;
+  }
+}
+
+
+
+/* JUNO.1 — Visible Liquid Glass Navbar */
+
+.juno-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: rgba(20, 20, 22, 0.68);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+}
+
+/* Glass navigation capsule */
+.liquid-nav {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+
+  /* Visible frosted-glass body */
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.20),
+    rgba(180, 180, 190, 0.10) 45%,
+    rgba(255, 255, 255, 0.15)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.30);
+
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  backdrop-filter: blur(32px) saturate(190%);
+
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.12),
+    0 8px 28px rgba(0, 0, 0, 0.28),
+    0 1px 5px rgba(255, 255, 255, 0.06);
+}
+
+/* Sliding liquid-glass pill */
+
+.liquid-indicator {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.48),
+    rgba(235, 235, 245, 0.25) 38%,
+    rgba(255, 255, 255, 0.16) 68%,
+    rgba(255, 255, 255, 0.34)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.55);
+
+  -webkit-backdrop-filter: blur(24px) saturate(220%);
+  backdrop-filter: blur(24px) saturate(220%);
+
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.75),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.15),
+    0 3px 12px rgba(0, 0, 0, 0.12),
+    0 0 14px rgba(255, 255, 255, 0.09);
+
+  transition:
+    left 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease;
+}
+
+
+/* Moving liquid reflection */
+.liquid-reflection {
+  position: absolute;
+  inset: -50% -100%;
+
+  background: linear-gradient(
+    110deg,
+    transparent 34%,
+    rgba(255, 255, 255, 0.08) 42%,
+    rgba(255, 255, 255, 0.65) 49%,
+    rgba(255, 255, 255, 0.16) 54%,
+    transparent 63%
+  );
+
+  transform: translateX(-70%);
+  animation: liquid-reflect 3s ease-in-out infinite;
+}
+
+/* Shining edge */
+.liquid-sparkle {
+  position: absolute;
+  top: 0;
+  left: 12%;
+  width: 76%;
+  height: 1.5px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.95),
+    transparent
+  );
+
+  filter: blur(0.3px);
+  animation: liquid-twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes liquid-reflect {
+  0% {
+    transform: translateX(-70%);
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(70%);
+    opacity: 0.3;
+  }
+}
+
+@keyframes liquid-twinkle {
+  0%, 100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-indicator,
+  .liquid-reflection,
+  .liquid-sparkle {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* Hide the entire glass capsule until a nav link is clicked */
+.liquid-nav {
+  transition: opacity 250ms ease, background 250ms ease,
+    border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.liquid-nav.glass-hidden {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.liquid-nav.glass-visible {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.20),
+    rgba(180, 180, 190, 0.10) 45%,
+    rgba(255, 255, 255, 0.15)
+  );
+  border-color: rgba(255, 255, 255, 0.30);
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.12),
+    0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+
+/* Force desktop navigation to stay hidden on mobile */
+@media (max-width: 639px) {
+  .liquid-nav {
+    display: none !important;
+  }
+}
+
+/* Show desktop navigation on larger screens */
+@media (min-width: 640px) {
+  .liquid-nav {
+    display: flex;
+  }
+}
