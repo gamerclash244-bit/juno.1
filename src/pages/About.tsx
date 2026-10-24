@@ -11,8 +11,8 @@ function About(): React.ReactElement {
       {/* Page header */}
       <section className="px-5 pb-16 pt-16 sm:px-10 sm:pb-24 sm:pt-24">
         <div className="screen-max-width">
-          <h1 className="page-title">About JUNO.1</h1>
-          <p className="prose-juno mt-8 text-xl">
+          <h1 className="page-title" data-split>About JUNO.1</h1>
+          <p className="prose-juno mt-8 text-xl" data-reveal>
             JUNO.1 is a compact hardware unit designed and published by {SITE.owner}. It is built for
              musicians who demand seamless control and reliable performance. Designed to simplify live music workflows, it brings responsive control, intuitive operation, and smoother transitions to the stage.
           </p>
@@ -22,8 +22,8 @@ function About(): React.ReactElement {
       {/* What it is */}
       <section className="bg-surface px-5 py-20 sm:px-10 sm:py-28">
         <div className="screen-max-width grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
-          <h2 className="section-heading">What JUNO.1 is</h2>
-          <div className="space-y-6">
+          <h2 className="section-heading" data-split>What JUNO.1 is</h2>
+          <div className="space-y-6" data-stagger>
             <p className="prose-juno">
               JUNO.1 is a performance-focused music device designed to make live performance 
               smoother, simpler, and more reliable. Created with musicians in mind, it focuses on intuitive control, responsive operation, and a seamless START/STOP workflow that keeps performers connected to their music.
@@ -50,10 +50,10 @@ function About(): React.ReactElement {
       {/* Principles */}
       <section className="px-5 py-20 sm:px-10 sm:py-28" aria-labelledby="principles-heading">
         <div className="screen-max-width">
-          <h2 id="principles-heading" className="section-heading">
+          <h2 id="principles-heading" className="section-heading" data-split>
             How it&apos;s designed
           </h2>
-          <ul className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+          <ul className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8" data-stagger>
             {principles.map((p) => (
               <li key={p.title} className="border-t border-line pt-6">
                 <h3 className="font-display text-xl font-medium tracking-tight">{p.title}</h3>
@@ -67,10 +67,10 @@ function About(): React.ReactElement {
       {/* Specs */}
       <section className="bg-surface px-5 py-20 sm:px-10 sm:py-28" aria-labelledby="specs-heading">
         <div className="screen-max-width grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-16">
-          <h2 id="specs-heading" className="section-heading">
+          <h2 id="specs-heading" className="section-heading" data-split>
             At a glance
           </h2>
-          <dl className="border-b border-line">
+          <dl className="border-b border-line" data-stagger>
             {specs.map((s) => (
               <div
                 key={s.label}
@@ -87,13 +87,13 @@ function About(): React.ReactElement {
       {/* Contact */}
       <section className="px-5 py-20 sm:px-10 sm:py-28" aria-labelledby="contact-heading">
         <div className="screen-max-width">
-          <h2 id="contact-heading" className="section-heading">
+          <h2 id="contact-heading" className="section-heading" data-split>
             Questions about JUNO.1?
           </h2>
-          <p className="prose-juno mb-8 mt-5">
+          <p className="prose-juno mb-8 mt-5" data-reveal>
             Email us for support, firmware help or general questions.
           </p>
-          <CopyEmail />
+          <div data-reveal><CopyEmail /></div>
         </div>
       </section>
     </>

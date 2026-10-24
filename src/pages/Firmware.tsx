@@ -44,8 +44,8 @@ function Firmware(): React.ReactElement {
       {/* Page header */}
       <section className="px-5 pb-12 pt-16 sm:px-10 sm:pt-24">
         <div className="screen-max-width">
-          <h1 className="page-title">Firmware update</h1>
-          <p className="prose-juno mt-8 text-xl">
+          <h1 className="page-title" data-split>Firmware update</h1>
+          <p className="prose-juno mt-8 text-xl" data-reveal>
             Download the latest firmware for JUNO.1 and see what changed in each release.
           </p>
         </div>
@@ -55,7 +55,7 @@ function Firmware(): React.ReactElement {
       {latest && (
         <section className="px-5 pb-20 sm:px-10 sm:pb-28" aria-labelledby="latest-heading">
           <div className="screen-max-width">
-            <div className="rounded-3xl border border-line bg-surface p-7 sm:p-10">
+            <div className="rounded-3xl border border-line bg-surface p-7 sm:p-10" data-reveal="scale">
               <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
                 <div>
                   <h2 id="latest-heading" className="text-gray">
@@ -95,10 +95,10 @@ function Firmware(): React.ReactElement {
       {/* How to update */}
       <section className="bg-surface px-5 py-20 sm:px-10 sm:py-28" aria-labelledby="steps-heading">
         <div className="screen-max-width grid gap-10 md:grid-cols-[1fr_1.4fr] md:gap-16">
-          <h2 id="steps-heading" className="section-heading">
+          <h2 id="steps-heading" className="section-heading" data-split>
             How to update
           </h2>
-          <ol className="border-b border-line">
+          <ol className="border-b border-line" data-stagger>
             {updateSteps.map((s, i) => (
               <li key={s.title} className="grid grid-cols-[2.5rem_1fr] gap-2 border-t border-line py-6">
                 <span className="font-display text-xl text-cap">{i + 1}</span>
@@ -116,10 +116,10 @@ function Firmware(): React.ReactElement {
       {earlier.length > 0 && (
         <section className="px-5 py-20 sm:px-10 sm:py-28" aria-labelledby="history-heading">
           <div className="screen-max-width">
-            <h2 id="history-heading" className="section-heading">
+            <h2 id="history-heading" className="section-heading" data-split>
               Earlier releases
             </h2>
-            <ul className="mt-12 border-b border-line">
+            <ul className="mt-12 border-b border-line" data-stagger>
               {earlier.map((r) => (
                 <li
                   key={r.version}
@@ -144,11 +144,11 @@ function Firmware(): React.ReactElement {
       {/* Help */}
       <section className="px-5 py-20 sm:px-10 sm:py-28">
         <div className="screen-max-width">
-          <h2 className="section-heading">Need help updating?</h2>
-          <p className="prose-juno mb-8 mt-5">
+          <h2 className="section-heading" data-split>Need help updating?</h2>
+          <p className="prose-juno mb-8 mt-5" data-reveal>
             Tell us which version you are installing and what you see on your JUNO.1.
           </p>
-          <a href={mailto("JUNO.1 firmware help")} className="btn">
+          <a href={mailto("JUNO.1 firmware help")} className="btn" data-reveal>
             Email support
           </a>
         </div>

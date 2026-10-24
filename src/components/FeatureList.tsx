@@ -5,11 +5,11 @@ function FeatureList(): React.ReactElement {
   return (
     <section className="common-padding" aria-labelledby="features-heading">
       <div className="screen-max-width">
-        <h2 id="features-heading" className="section-heading">
+        <h2 id="features-heading" className="section-heading" data-split>
           Explore the full story.
         </h2>
 
-        <ul className="mt-14 border-b border-line">
+        <ul className="mt-14 border-b border-line" data-stagger>
           {features.map((f) => (
             <li
               key={f.title}

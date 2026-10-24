@@ -8,7 +8,7 @@ function Footer(): React.ReactElement {
   return (
     <footer className="border-t border-line px-5 pb-8 pt-14 sm:px-10">
       <div className="screen-max-width">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]" data-stagger>
           {/* Brand */}
           <div>
             <Link
@@ -57,6 +57,18 @@ function Footer(): React.ReactElement {
                   Firmware download
                 </Link>
               </li>
+
+              <li>
+                <Link to="/buy" className="text-gray-100 hover:text-white">
+                  Buy JUNO.1
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/orders" className="text-gray-100 hover:text-white">
+                  Track an order
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -93,7 +105,7 @@ function Footer(): React.ReactElement {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 border-t border-line pt-6">
+        <div className="mt-12 border-t border-line pt-6" data-reveal="fade">
           <p className="text-xs text-gray">
             &copy; {new Date().getFullYear()} {SITE.owner}. All rights reserved.
           </p>

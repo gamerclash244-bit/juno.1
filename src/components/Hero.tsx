@@ -43,7 +43,10 @@ function Hero(): React.ReactElement {
         </p>
 
         <div className="hero-in mt-8 flex flex-wrap gap-3">
-          <Link to="/about" className="btn">
+          <Link to="/buy" className="btn">
+            Buy JUNO.1
+          </Link>
+          <Link to="/about" className="btn-ghost">
             About JUNO.1
           </Link>
           <Link to="/firmware" className="btn-ghost">
