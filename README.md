@@ -32,25 +32,27 @@ Deploys as-is to Vercel or Netlify (SPA rewrites included).
 ## Credits
 Layout approach adapted from an MIT-licensed iPhone showcase template (notice kept in `LICENSES/template-MIT.txt`). All Apple images, videos and the iPhone model have been removed.
 
-## Buying, login and payments
+## Buying
 
-The shop runs in **demo mode** until you connect a backend: accounts and orders are stored in the browser and the payment window is a test. To take real payments use Supabase (login + database + server functions) and Razorpay (UPI, cards, net banking).
+Orders are taken on WhatsApp only. `/buy` shows an "Order on WhatsApp" button that opens a message with name, quantity, colour and address ready to fill in. The earlier online-checkout build (login, Razorpay, order tracking) is kept in `archive/online-orders/` and is not part of the app.
 
-1. **Supabase project**: create one, then run `supabase/schema.sql` in the SQL editor.
-2. **Razorpay**: create an account and get a Key ID and Key Secret (test keys first).
-3. **Set function secrets** (Supabase dashboard, or `supabase secrets set`):
-   `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`, `JUNO_PRICE_PAISE` (e.g. 499900 for ₹4,999), `JUNO_SHIPPING_PAISE`.
-4. **Deploy the functions**:
-   ```bash
-   supabase functions deploy create-order
-   supabase functions deploy verify-payment
-   supabase functions deploy razorpay-webhook --no-verify-jwt
-   ```
-5. **Razorpay webhook**: point it at `https://<project>.supabase.co/functions/v1/razorpay-webhook`, events `payment.captured`, `order.paid`, `payment.failed`, using the same secret as `RAZORPAY_WEBHOOK_SECRET`.
-6. **Site environment** (Netlify/Vercel, or a local `.env`): copy `.env.example` and fill `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_RAZORPAY_KEY_ID`.
-7. **Price**: set `pricePaise` / `shippingPaise` in `src/constants/shop.ts` to match the secrets. The placeholder is ₹4,999.
+## Home hero video
 
-Updating an order: open the `orders` table in Supabase, change `status` (paid, packed, shipped, delivered) and optionally fill `courier` and `tracking_number`. The customer's tracking page updates and the time is stamped automatically.
+The first section of the home page is a full-screen video. Add `hero.mp4` (and optionally `hero.webm` and `hero-poster.jpg`) to `public/videos/`; see `public/videos/README.txt`. It plays muted on a loop, pauses when scrolled away, and has a pause button. Until the file exists an animated placeholder shows. On scroll the video shrinks into a rounded card while the text lifts away.
+
+## Home images
+
+Put your pictures in `public/images/` (see `public/images/README.txt`) and edit `src/constants/gallery.ts`:
+
+- `COLOURS`: slide 1 of the viewer, JUNO.1 in each colour, cross-fading automatically.
+- `GALLERY`: the slides after it.
+- `DETAIL_IMAGE`: the close-up that the pinned specification section zooms across.
+
+Until a file exists a tinted placeholder is shown. Edit the specification stops in `src/components/SpecShowcase.tsx` (`chapters`).
+
+## 3D model
+
+The 3D viewer is off. Set `SHOW_3D_VIEWER = true` in `src/constants/site.ts` to show it again below the specification section.
 
 ## Motion
 
