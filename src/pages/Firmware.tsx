@@ -1,8 +1,13 @@
 import { Download } from "lucide-react";
-import { firmwareReleases, updateSteps } from "../constants/firmware";
+import { downloadHref, firmwareReleases, updateSteps } from "../constants/firmware";
 import type { FirmwareRelease } from "../constants/firmware";
 import { mailto } from "../constants/site";
 import { usePageTitle } from "../hooks/usePageTitle";
+
+/** Ice blue: this page's accent, as red is for Contact. */
+const ICE = "#8fd3ff";
+const iceBtn =
+  "inline-flex items-center justify-center gap-2 rounded-full bg-[#8fd3ff] px-6 py-3 text-base font-semibold text-black transition-colors duration-200 hover:bg-white";
 
 const formatDate = (iso: string): string =>
   new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", {
@@ -13,9 +18,12 @@ const formatDate = (iso: string): string =>
 
 /** Download button, or a "being prepared" message when the file hasn't been published yet. */
 function DownloadAction({ release }: { release: FirmwareRelease }): React.ReactElement {
-  if (release.available) {
+  const href = downloadHref(release);
+  if (href) {
+    // GitHub release assets are served as attachments, so a plain link starts the download
+    // straight away without leaving this page.
     return (
-      <a href={`/firmware/${release.file}`} download className="btn">
+      <a href={href} download rel="noopener" className={iceBtn}>
         <Download size={18} aria-hidden />
         Download version {release.version}
       </a>
@@ -26,7 +34,7 @@ function DownloadAction({ release }: { release: FirmwareRelease }): React.ReactE
       Version {release.version} is being prepared.{" "}
       <a
         href={mailto(`JUNO.1 firmware ${release.version}`)}
-        className="text-cap underline-offset-4 hover:underline"
+        className="text-[#8fd3ff] underline-offset-4 hover:underline"
       >
         Email support
       </a>{" "}
@@ -40,11 +48,24 @@ function Firmware(): React.ReactElement {
   const [latest, ...earlier] = firmwareReleases;
 
   return (
-    <>
+    <div className="relative overflow-hidden">
+      {/* Ice-blue haze, the counterpart of the red on the Contact page */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[70%]"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 55% at 50% 20%, rgba(110,190,240,0.24), rgba(40,110,170,0.12) 50%, transparent 78%)",
+        }}
+      />
+      <div className="relative z-10">
       {/* Page header */}
       <section className="px-5 pb-12 pt-16 sm:px-10 sm:pt-24">
         <div className="screen-max-width">
-          <h1 className="page-title" data-split>Firmware update</h1>
+          <h1 className="page-title" data-reveal>
+            Firmware{" "}
+            <span style={{ color: ICE, textShadow: "0 0 0.2em rgba(143,211,255,0.55)" }}>update</span>
+          </h1>
           <p className="prose-juno mt-8 text-xl" data-reveal>
             Download the latest firmware for JUNO.1 and see what changed in each release.
           </p>
@@ -55,7 +76,7 @@ function Firmware(): React.ReactElement {
       {latest && (
         <section className="px-5 pb-20 sm:px-10 sm:pb-28" aria-labelledby="latest-heading">
           <div className="screen-max-width">
-            <div className="rounded-3xl border border-line bg-surface p-7 sm:p-10" data-reveal="scale">
+            <div className="rounded-3xl border border-line bg-surface p-7 transition-colors hover:border-[#8fd3ff]/40 sm:p-10" data-reveal="scale">
               <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
                 <div>
                   <h2 id="latest-heading" className="text-gray">
@@ -101,7 +122,7 @@ function Firmware(): React.ReactElement {
           <ol className="border-b border-line" data-stagger>
             {updateSteps.map((s, i) => (
               <li key={s.title} className="grid grid-cols-[2.5rem_1fr] gap-2 border-t border-line py-6">
-                <span className="font-display text-xl text-cap">{i + 1}</span>
+                <span className="font-display text-xl text-[#8fd3ff]">{i + 1}</span>
                 <div>
                   <h3 className="text-lg font-semibold">{s.title}</h3>
                   <p className="mt-1 max-w-[52ch] text-gray-100">{s.body}</p>
@@ -148,12 +169,13 @@ function Firmware(): React.ReactElement {
           <p className="prose-juno mb-8 mt-5" data-reveal>
             Tell us which version you are installing and what you see on your JUNO.1.
           </p>
-          <a href={mailto("JUNO.1 firmware help")} className="btn" data-reveal>
+          <a href={mailto("JUNO.1 firmware help")} className={iceBtn} data-reveal>
             Email support
           </a>
         </div>
       </section>
-    </>
+      </div>
+    </div>
   );
 }
 

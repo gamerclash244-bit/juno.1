@@ -183,3 +183,45 @@
     animation: none !important;
   }
 }
+
+/* ---- Hero photo: gentle float after it pops in ---- */
+.photo-float {
+  animation: photo-float 6s ease-in-out infinite;
+}
+@keyframes photo-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0.6deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-float {
+    animation: none;
+  }
+}
+.hero-photo-box {
+  /* Phones: the title is small, so the photo box gets bigger relative to it. */
+  height: calc(var(--ph) * 1.4);
+  width: min(calc(var(--pw) * 1.5), 100%);
+}
+@media (min-width: 640px) {
+  .hero-photo-box {
+    height: var(--ph);
+    width: var(--pw);
+  }
+}
+
+/* ---- Hero video fit ----
+   Wide screens: fill the frame (cover). Portrait/narrow screens: show the WHOLE video (contain)
+   instead of cropping the sides off. The footage sits on pure black, so the bars are invisible. */
+.hero-video {
+  object-fit: cover;
+}
+@media (max-aspect-ratio: 5/4) {
+  .hero-video {
+    object-fit: contain;
+  }
+}

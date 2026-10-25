@@ -38,7 +38,19 @@ Orders are taken on WhatsApp only. `/buy` shows an "Order on WhatsApp" button th
 
 ## Home hero video
 
-The first section of the home page is a full-screen video. Add `hero.mp4` (and optionally `hero.webm` and `hero-poster.jpg`) to `public/videos/`; see `public/videos/README.txt`. It plays muted on a loop, pauses when scrolled away, and has a pause button. Until the file exists an animated placeholder shows. On scroll the video shrinks into a rounded card while the text lifts away.
+The first section of the home page is a full-screen video. Add `hero.mp4` (and optionally `hero.webm` and `hero-poster.jpg`) to `public/videos/`; see `public/videos/README.txt`. It plays once, muted, and when it ends the JUNO.1 text, tagline and buttons fade in over its last frame. The corner button pauses it, and replays it once it has ended. Until the file exists an animated placeholder shows. On scroll the video shrinks into a rounded card while the text lifts away.
+
+## Firmware downloads (GitHub Releases)
+
+The Download button on `/firmware` downloads straight from your GitHub release. Attach the `.exe` to a GitHub release, right-click it on the release page, choose "Copy link address", and paste it into `url` for that version in `src/constants/firmware.ts`. Until a `url` is set the page shows "being prepared". GitHub turns spaces in file names into dots, so always paste the copied link rather than typing it.
+
+## Hero photo
+
+After the intro video, a photo of JUNO.1 pops up in the middle of the big title. Add a transparent PNG at `public/images/hero/juno.png` and tune its size with `HERO_PHOTO` in `src/constants/gallery.ts`.
+
+## Page colours
+
+Contact has a red haze and accents, Firmware has ice blue (`#8fd3ff`), About stays black.
 
 ## Home images
 
