@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useReveal } from "../hooks/useReveal";
@@ -14,9 +15,19 @@ function Layout(): React.ReactElement {
   const { pathname } = useLocation();
   const shell = useRef<HTMLDivElement>(null);
 
-  // Start each page at the top when navigating
+  // Never let the browser restore an old scroll position when switching pages.
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  }, []);
+
+  // Start every page at the very top. `instant` matters: the site sets
+  // `scroll-behavior: smooth`, and a smooth scroll gets cut short when the new page
+  // changes height, leaving the visitor part-way down.
+  useLayoutEffect(() => {
+    ScrollTrigger.clearScrollMemory();
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    const id = requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" }));
+    return () => cancelAnimationFrame(id);
   }, [pathname]);
 
   // Page-enter: a short rise so route changes feel continuous rather than abrupt

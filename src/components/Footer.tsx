@@ -64,11 +64,6 @@ function Footer(): React.ReactElement {
                 </Link>
               </li>
 
-              <li>
-                <Link to="/orders" className="text-gray-100 hover:text-white">
-                  Track an order
-                </Link>
-              </li>
             </ul>
           </div>
 

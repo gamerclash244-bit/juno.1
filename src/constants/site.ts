@@ -13,6 +13,12 @@ export const SITE = {
   modelUrl: "/models/juno1.glb",
 } as const;
 
+/**
+ * The interactive 3D model on the home page is switched OFF.
+ * Set to true to show it again (below the image viewer).
+ */
+export const SHOW_3D_VIEWER = false;
+
 export const mailto = (subject?: string): string =>
   `mailto:${SITE.email}${subject ? `?subject=${encodeURIComponent(subject)}` : ""}`;
 
