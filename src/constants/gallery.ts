@@ -36,7 +36,7 @@ export const DETAIL_IMAGE = "/images/detail/closeup.jpg";
 
 /**
  * Video behind the home page's first section. Put your file in /public/videos.
- * It plays once, muted; when it ends the page text fades in over its last frame.
+ * It plays once, muted; at 45% the page text eases in over the remaining footage.
  * Tips: 1920x1080 or wider, under ~8 MB.
  * Sources are tried in order; MP4 (H.264) works everywhere, WebM is an optional smaller extra.
  */
@@ -50,7 +50,7 @@ export const HERO_VIDEO = {
 };
 
 /**
- * Photo of JUNO.1 that pops up in the middle of the big JUNO.1 title after the intro video.
+ * Photo of JUNO.1 that dissolves in over the middle of the big JUNO.1 title after the intro video.
  * Use a transparent PNG/WebP (the unit cut out, any aspect ratio, ~1600 px wide). Drop it in /public/images/hero.
  * The photo is fitted inside a box centred on the title:
  *   heightPct   box height as % of the title's height (190 = a little taller than the letters)

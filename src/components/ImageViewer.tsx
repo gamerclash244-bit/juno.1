@@ -34,21 +34,16 @@ function Pic({ src, alt, tint = "#2a2a2e", contain = false }: { src: string; alt
 /** Slide 1: JUNO.1 in every colour. Cross-fades on a timer; the swatches jump to a colour. */
 function ColourSlide({ active, reduced }: { active: boolean; reduced: boolean }): React.ReactElement {
   const [i, setI] = useState(0);
-  const [prev, setPrev] = useState(-1);
   const [hover, setHover] = useState(false);
 
   const pick = (n: number): void => {
     if (n === i) return;
-    setPrev(i);
     setI(n);
   };
 
   useEffect(() => {
     if (!active || hover || reduced || COLOURS.length < 2) return;
-    const t = window.setTimeout(() => {
-      setPrev(i);
-      setI((v) => (v + 1) % COLOURS.length);
-    }, 3200);
+    const t = window.setTimeout(() => setI((v) => (v + 1) % COLOURS.length), 3200);
     return () => window.clearTimeout(t);
   }, [active, hover, reduced, i]);
 
@@ -56,19 +51,18 @@ function ColourSlide({ active, reduced }: { active: boolean; reduced: boolean })
     <div className="absolute inset-0" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       {COLOURS.map((c, n) => {
         const isActive = n === i;
-        const isPrev = n === prev;
         return (
           <div
             key={c.name}
             className="absolute inset-0"
             style={{
-              opacity: isActive || isPrev ? 1 : 0,
+              opacity: isActive ? 1 : 0,
               zIndex: isActive ? 2 : 1,
-              transform: isActive ? "scale(1)" : "scale(0.96)",
-              // The new colour fades in over the old one; the old one is hidden only once it is covered.
+              // Pure dissolve: the new colour fades in over the old one, which then fades out.
+              // Every layer keeps its own opacity transition, so rapid swatch clicks never snap.
               transition: isActive
-                ? "opacity 1000ms cubic-bezier(0.22,1,0.36,1), transform 1400ms cubic-bezier(0.22,1,0.36,1)"
-                : "opacity 0ms linear 1050ms, transform 1400ms cubic-bezier(0.22,1,0.36,1)",
+                ? "opacity 900ms cubic-bezier(0.22,1,0.36,1)"
+                : "opacity 500ms ease 950ms",
             }}
             aria-hidden={!isActive}
           >

@@ -38,7 +38,7 @@ Orders are taken on WhatsApp only. `/buy` shows an "Order on WhatsApp" button th
 
 ## Home hero video
 
-The first section of the home page is a full-screen video. Add `hero.mp4` (and optionally `hero.webm` and `hero-poster.jpg`) to `public/videos/`; see `public/videos/README.txt`. It plays once, muted, and when it ends the JUNO.1 text, tagline and buttons fade in over its last frame. The corner button pauses it, and replays it once it has ended. Until the file exists an animated placeholder shows. On scroll the video shrinks into a rounded card while the text lifts away.
+The first section of the home page is a full-screen video. Add `hero.mp4` (and optionally `hero.webm` and `hero-poster.jpg`) to `public/videos/`; see `public/videos/README.txt`. It plays once, muted, and when playback reaches 45% the JUNO.1 text, tagline and buttons ease in over the remaining footage. The corner button pauses it, and replays it once it has ended. Until the file exists an animated placeholder shows. On scroll the video shrinks into a rounded card while the text lifts away.
 
 ## Firmware downloads (GitHub Releases)
 

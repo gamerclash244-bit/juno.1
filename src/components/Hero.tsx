@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Pause, Play, RotateCcw } from "lucide-react";
 import gsap from "gsap";
@@ -13,9 +13,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Hero: a full-screen video with the JUNO.1 wordmark over it.
- * Load: the video plays alone first; after a short beat J-U-N-O-1 rise over it and the cream dot drops in like a full stop.
+ * Load: the video plays alone first; once it is 45% through, J-U-N-O-1 rises over it and the cream dot drops in like a full stop.
  * Scroll: the video frame shrinks into a rounded card while the text lifts away.
  */
+const REVEAL_AT = 0.45;
 function Hero(): React.ReactElement {
   const root = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
@@ -26,6 +27,7 @@ function Hero(): React.ReactElement {
   const [playing, setPlaying] = useState(false);
   const [ended, setEnded] = useState(false);
   const [inView, setInView] = useState(true);
+  const revealed = useRef(false);
 
   useGSAP(
     () => {
@@ -35,15 +37,21 @@ function Hero(): React.ReactElement {
         gsap.from(".hero-frame", { opacity: 0, duration: 1.2, ease: "power1.out" });
         gsap.from(".hero-media", { scale: 1.1, duration: 2.4, ease: "power2.out" });
 
-        // 2. When the video ends, the text fades in (this timeline waits, paused, until then).
+        // 2. At 45% of the video the text eases in (this timeline waits, paused, until then).
+        // Long, overlapping tweens with soft deceleration keep the entrance smooth rather than snappy.
         textIn.current = gsap
-          .timeline({ paused: true, defaults: { ease: "power3.out" } })
-          .from(".hero-scrim", { opacity: 0, duration: 1.4, ease: "power1.out" }, 0)
-          .from(".wm-letter", { yPercent: 45, opacity: 0, duration: 1, stagger: 0.08 }, 0.1)
+          .timeline({ paused: true, defaults: { ease: "power2.out", force3D: true } })
+          .from(".hero-scrim", { opacity: 0, duration: 1.8, ease: "power1.inOut" }, 0)
+          .from(".wm-letter", { yPercent: 60, opacity: 0, duration: 1.4, stagger: 0.07 }, 0.15)
           .from(".wm-dot", { yPercent: -900, opacity: 0, duration: 1, ease: "bounce.out" }, "-=0.4")
-          .from(".hero-photo", { opacity: 0, scale: 0.55, y: 70, rotate: -6, duration: 1.4, ease: "back.out(1.4)" }, 0.4)
-          .from(".hero-in", { opacity: 0, y: 14, duration: 0.8, stagger: 0.12 }, "-=0.6")
-          .from(".hero-cue", { opacity: 0, duration: 0.8 }, "-=0.3");
+          // The photo dissolves in over the title, with no pop or rotation.
+          .from(".hero-photo", { opacity: 0, duration: 1.8, ease: "power1.inOut" }, 0.45)
+          .from(".hero-in", { opacity: 0, y: 18, duration: 1.1, stagger: 0.16 }, 0.6)
+          .from(".hero-cue", { opacity: 0, duration: 1.1 }, 0.9);
+
+        // If this timeline is rebuilt (hot reload / media-query change) after the intro
+        // was already revealed, jump it to the end instead of dropping the title back out.
+        if (revealed.current) textIn.current.progress(1);
 
         // No pinned runway: the hero simply scrolls away, shrinking and fading as it goes.
         const scroll = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
@@ -56,23 +64,54 @@ function Hero(): React.ReactElement {
     { scope: root }
   );
 
-  // The video is a one-time intro: when it finishes, the text fades in over its last frame.
-  // Timers cover a missing video, blocked autoplay or a stalled download so the text always appears.
+  // The video is a one-time intro: once it is 45% through, the text eases in over the remaining footage.
+  const reveal = useCallback((): void => {
+    if (revealed.current) return;
+    revealed.current = true;
+    textIn.current?.timeScale(1).play();
+  }, []);
+
+  // Timers cover a missing video or a stalled download so the text is never trapped off-screen.
   useEffect(() => {
     const v = video.current;
-    const show = (): void => {
+    if (!v) {
+      const fallback = window.setTimeout(reveal, 800);
+      return () => window.clearTimeout(fallback);
+    }
+
+    const onEnded = (): void => {
       setEnded(true);
       setPlaying(false);
-      textIn.current?.timeScale(1).play();
+      reveal();
     };
-    v?.addEventListener("ended", show);
-    const wait = failed ? 800 : 12000;
-    const fallback = window.setTimeout(() => textIn.current?.play(), wait);
+    const onProgress = (): void => {
+      const { currentTime, duration } = v;
+      if (!Number.isFinite(duration) || duration <= 0) return;
+      if (currentTime / duration >= REVEAL_AT) reveal();
+    };
+
+    // Safety net if playback stalls: reveal after the 45% mark in wall-clock time.
+    let fallback = 0;
+    const onMetadata = (): void => {
+      onProgress();
+      window.clearTimeout(fallback);
+      if (Number.isFinite(v.duration) && v.duration > 0) {
+        fallback = window.setTimeout(reveal, v.duration * REVEAL_AT * 1000 + 2000);
+      }
+    };
+
+    v.addEventListener("ended", onEnded);
+    v.addEventListener("timeupdate", onProgress);
+    v.addEventListener("loadedmetadata", onMetadata);
+    if (v.readyState >= 1) onMetadata();
+
     return () => {
-      v?.removeEventListener("ended", show);
+      v.removeEventListener("ended", onEnded);
+      v.removeEventListener("timeupdate", onProgress);
+      v.removeEventListener("loadedmetadata", onMetadata);
       window.clearTimeout(fallback);
     };
-  }, [failed]);
+  }, [failed, reveal]);
 
   // Play when allowed and on screen; pause when scrolled away to save battery.
   useEffect(() => {
@@ -92,15 +131,22 @@ function Hero(): React.ReactElement {
       return;
     }
     if (v.ended) return; // never restart the intro just because the hero scrolled back into view
-    v.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-  }, [reduced, inView, failed]);
+    v.play()
+      .then(() => setPlaying(true))
+      .catch(() => {
+        // Autoplay was blocked, so the video will not reach 45% on its own: show the copy now.
+        setPlaying(false);
+        reveal();
+      });
+  }, [reduced, inView, failed, reveal]);
 
   const toggle = (): void => {
     const v = video.current;
     if (!v) return;
     if (v.ended) {
-      // Replay: the text steps aside, the intro runs again, the text returns when it ends.
+      // Replay: the text steps aside, the intro runs again, the text returns at 45%.
       textIn.current?.timeScale(1.8).reverse();
+      revealed.current = false;
       setEnded(false);
       v.currentTime = 0;
       void v.play().then(() => setPlaying(true));
@@ -153,7 +199,7 @@ function Hero(): React.ReactElement {
               <h1 className="leading-none tracking-[-0.04em]" style={{ fontSize: "clamp(3rem, min(20vw, 34dvh), 16rem)" }}>
                 <Wordmark />
               </h1>
-              {/* The JUNO.1 photo pops up in the middle of the title */}
+              {/* The JUNO.1 photo dissolves in over the middle of the title */}
               <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center" aria-hidden>
                 <div
                   className="hero-photo hero-photo-box"
