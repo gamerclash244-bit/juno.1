@@ -4,6 +4,7 @@ import ScrubStatement from "../components/ScrubStatement";
 import ImageViewer from "../components/ImageViewer";
 import SpecShowcase from "../components/SpecShowcase";
 import FeatureList from "../components/FeatureList";
+import Reviews from "../components/Reviews";
 import FirmwareBand from "../components/FirmwareBand";
 import { SHOW_3D_VIEWER } from "../constants/site";
 import { usePageTitle } from "../hooks/usePageTitle";
@@ -26,6 +27,7 @@ function Home(): React.ReactElement {
         </Suspense>
       )}
       <FeatureList />
+      <Reviews />
       <FirmwareBand />
     </>
   );

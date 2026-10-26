@@ -7,7 +7,7 @@ import { usePageTitle } from "../hooks/usePageTitle";
 /** Ice blue: this page's accent, as red is for Contact. */
 const ICE = "#8fd3ff";
 const iceBtn =
-  "inline-flex items-center justify-center gap-2 rounded-full bg-[#8fd3ff] px-6 py-3 text-base font-semibold text-black transition-colors duration-200 hover:bg-white";
+  "sweep inline-flex items-center justify-center gap-2 rounded-full bg-[#8fd3ff] px-6 py-3 text-base font-semibold text-black";
 
 const formatDate = (iso: string): string =>
   new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", {

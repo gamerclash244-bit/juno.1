@@ -33,6 +33,7 @@ export const navItems: NavItem[] = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
   { label: "Firmware", to: "/firmware" },
+  { label: "FAQ", to: "/faq" },
   { label: "Contact", to: "/contact" },
   { label: "Buy", to: "/buy" },
 ];
@@ -72,7 +73,7 @@ export const specs: Spec[] = [
   { label: "Product", value: "JUNO.1" },
   { label: "Ports", value: "4 * 1/4 mono jack" },
   { label: "Cable", value: "Braided USB-A Cable" },
-  { label: "Finish", value: "Black enclosure (may changes)" },
+  { label: "Finish", value: "Matte black, matte ice blue, matte red" },
   { label: "Firmware", value: "User-updatable, downloaded from this site" },
   { label: "Support", value: SITE.email },
   { label: "For Booking through Whatsapp", value: SITE.number},

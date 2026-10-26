@@ -50,7 +50,7 @@ function Navbar(): React.ReactElement {
           {buy && (
             <Link
               to={buy.to}
-              className="hidden rounded-full bg-cap px-3.5 py-1 text-xs font-semibold text-black transition-opacity hover:opacity-85 sm:inline-block"
+              className="sweep hidden rounded-full bg-cap px-3.5 py-1 text-xs font-semibold text-black sm:inline-block"
             >
               {buy.label}
             </Link>

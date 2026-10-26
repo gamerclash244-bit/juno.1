@@ -5,9 +5,10 @@ import About from "./pages/About";
 import Firmware from "./pages/Firmware";
 import Contact from "./pages/Contact";
 import Buy from "./pages/Buy";
+import Faq from "./pages/Faq";
 import NotFound from "./pages/NotFound";
 
-/** Routes: / (home), /about, /firmware, /contact, /buy (WhatsApp orders). Everything shares the Layout (navbar + footer). */
+/** Routes: / (home), /about, /firmware, /faq, /contact, /buy (WhatsApp orders). Everything shares the Layout (navbar + footer). */
 function App(): React.ReactElement {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App(): React.ReactElement {
           <Route path="firmware" element={<Firmware />} />
           <Route path="contact" element={<Contact />} />
           <Route path="buy" element={<Buy />} />
+          <Route path="faq" element={<Faq />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

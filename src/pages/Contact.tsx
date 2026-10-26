@@ -68,7 +68,7 @@ function Contact(): React.ReactElement {
   const iconBadge =
     "flex h-12 w-12 items-center justify-center rounded-full border border-[#e5101c]/40 text-[#e5101c]";
   const redBtn =
-    "inline-flex items-center justify-center gap-2 rounded-full bg-[#c4121d] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#e5101c]";
+    "sweep-red inline-flex items-center justify-center gap-2 rounded-full bg-[#c4121d] px-6 py-3 text-base font-semibold text-white";
 
   return (
     <div ref={root} className="relative overflow-hidden">

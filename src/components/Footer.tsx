@@ -59,6 +59,12 @@ function Footer(): React.ReactElement {
               </li>
 
               <li>
+                <Link to="/faq" className="text-gray-100 hover:text-white">
+                  FAQ
+                </Link>
+              </li>
+
+              <li>
                 <Link to="/buy" className="text-gray-100 hover:text-white">
                   Buy JUNO.1
                 </Link>

@@ -13,9 +13,9 @@ export interface ColourOption {
 
 /** Slide 1 of the viewer: JUNO.1 in each colour, cross-fading automatically. Rename / add / remove freely. */
 export const COLOURS: ColourOption[] = [
-  { name: "Black", swatch: "#1a1a1d", src: "/images/colours/black.png" },
-  { name: "White", swatch: "#e8e8e4", src: "/images/colours/white.png" },
-  { name: "Red", swatch: "#c4222d", src: "/images/colours/red.png" },
+  { name: "Matte Black", swatch: "#1c1c1f", src: "/images/colours/black.png" },
+  { name: "Matte Ice Blue", swatch: "#a9cfdd", src: "/images/colours/ice-blue.png" },
+  { name: "Matte Red", swatch: "#c4222d", src: "/images/colours/red.png" },
 ];
 
 export interface GalleryImage {
