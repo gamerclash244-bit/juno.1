@@ -24,7 +24,7 @@ export const ORDER_FACTS: OrderFact[] = [
   { label: "Payment", value: "Arranged with us on WhatsApp" },
   { label: "Delivery", value: "Charges and timing confirmed on WhatsApp for your PIN code" },
   { label: "In the box", value: "JUNO.1 unit and the braided USB-A cable" },
-  { label: "Colours", value: "Matte black, matte ice blue and matte red (finish may change)" },
+  { label: "Colours", value: "Matte black and matte rose (finish may change)" },
   { label: "Firmware", value: "Updates are downloaded from the firmware page" },
   { label: "Support", value: `WhatsApp ${SITE.whatsappDisplay} · ${SITE.email}` },
 ];

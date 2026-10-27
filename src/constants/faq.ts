@@ -31,7 +31,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       },
       {
         q: "Which colours can I choose?",
-        a: "Matte black, matte ice blue and matte red. Pick one on the Buy page and the photo switches to that colour. The finish may change slightly between batches, so we confirm the colour with you on WhatsApp before dispatch.",
+        a: "Matte black or matte rose. Pick one on the Buy page and the photo switches to that colour. The finish may change slightly between batches, so we confirm the colour with you on WhatsApp before dispatch.",
       },
       {
         q: "How do I connect it?",

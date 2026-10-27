@@ -14,8 +14,7 @@ export interface ColourOption {
 /** Slide 1 of the viewer: JUNO.1 in each colour, cross-fading automatically. Rename / add / remove freely. */
 export const COLOURS: ColourOption[] = [
   { name: "Matte Black", swatch: "#1c1c1f", src: "/images/colours/black.png" },
-  { name: "Matte Ice Blue", swatch: "#a9cfdd", src: "/images/colours/ice-blue.png" },
-  { name: "Matte Red", swatch: "#c4222d", src: "/images/colours/red.png" },
+  { name: "Matte Rose", swatch: "#d6aeab", src: "/images/colours/rose.png" },
 ];
 
 export interface GalleryImage {
@@ -26,9 +25,8 @@ export interface GalleryImage {
 
 /** Slides 2 onwards. Leave empty ([]) for a viewer with only the colours slide. */
 export const GALLERY: GalleryImage[] = [
-  { title: "Front", alt: "JUNO.1 from the front", src: "/images/gallery/front.jpg" },
-  { title: "Ports", alt: "The four ports on JUNO.1", src: "/images/gallery/ports.jpg" },
-  { title: "On stage", alt: "JUNO.1 on a stage rig", src: "/images/gallery/stage.jpg" },
+  { title: "Front", alt: "JUNO.1 from the front", src: "/images/gallery/front.png" },
+  { title: "Ports", alt: "The four 1/4\u2033 mono jacks on JUNO.1", src: "/images/gallery/ports.png" },
 ];
 
 /** Close-up used by the specification section (a large photo; the page pans and zooms across it). */

@@ -50,8 +50,9 @@ function Reviews(): React.ReactElement {
         tabIndex={0}
       >
         <div className="reviews-track">
-          {[0, 1].map((copy) => (
-            <div key={copy} className="reviews-group" aria-hidden={copy === 1 ? true : undefined}>
+          {/* Four copies keep the drift seamless even with a short list: the loop shifts by exactly two. */}
+          {[0, 1, 2, 3].map((copy) => (
+            <div key={copy} className="reviews-group" aria-hidden={copy > 0 ? true : undefined}>
               {REVIEWS.map((review) => (
                 <ReviewCard key={`${copy}-${review.name}`} review={review} />
               ))}

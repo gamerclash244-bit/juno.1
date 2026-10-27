@@ -60,6 +60,8 @@ function Hero(): React.ReactElement {
         gsap.to(".hero-copy", { yPercent: -22, opacity: 0, ease: "none", scrollTrigger: { ...scroll, end: "65% top" } });
         gsap.to(".hero-cue", { opacity: 0, ease: "none", scrollTrigger: { ...scroll, end: "20% top" } });
       });
+
+      return () => mm.revert();
     },
     { scope: root }
   );

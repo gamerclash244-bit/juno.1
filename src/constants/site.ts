@@ -73,7 +73,7 @@ export const specs: Spec[] = [
   { label: "Product", value: "JUNO.1" },
   { label: "Ports", value: "4 * 1/4 mono jack" },
   { label: "Cable", value: "Braided USB-A Cable" },
-  { label: "Finish", value: "Matte black, matte ice blue, matte red" },
+  { label: "Finish", value: "Matte black, matte rose" },
   { label: "Firmware", value: "User-updatable, downloaded from this site" },
   { label: "Support", value: SITE.email },
   { label: "For Booking through Whatsapp", value: SITE.number},
