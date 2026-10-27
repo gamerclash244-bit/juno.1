@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import ReviewButton from "../components/ReviewButton";
+import ReviewComposer from "../components/ReviewComposer";
 import Hero from "../components/Hero";
 import ScrubStatement from "../components/ScrubStatement";
 import ImageViewer from "../components/ImageViewer";
@@ -29,7 +29,7 @@ function Home(): React.ReactElement {
       )}
       <FeatureList />
       <Reviews />
-      <ReviewButton />
+      <ReviewComposer />
       <FirmwareBand />
     </>
   );

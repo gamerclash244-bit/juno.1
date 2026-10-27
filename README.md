@@ -66,6 +66,10 @@ Until a file exists a tinted placeholder is shown. Edit the specification stops 
 
 The 3D viewer is off. Set `SHOW_3D_VIEWER = true` in `src/constants/site.ts` to show it again below the specification section.
 
+## Reviews
+
+`src/constants/reviews.ts` holds both the cards in the "What players say" band (`REVIEWS`) and where the writer sends what a visitor types (`REVIEW_FORM`). Under the band, "Add your review" opens a composer on the page: name, city, what they play and the review. Nothing opens in another tab; the message is posted to the JUNO.1 review form's own response endpoint, so it arrives in the same Google Form responses as before. That form has one question today, so the name, city and role are folded into the one answer with labels — add questions to the form, give each its own `entry.<id>` in `REVIEW_FORM`, and they can be sent as separate answers.
+
 ## Motion
 
 `src/hooks/useReveal.ts` drives every page. Add `data-split` (headline), `data-reveal` (block; `="line"`, `"scale"`, `"fade"`), or `data-stagger` (children in sequence) to any element. Reduced-motion users get none of it.
